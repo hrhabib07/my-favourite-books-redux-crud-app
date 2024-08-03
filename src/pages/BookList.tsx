@@ -1,4 +1,5 @@
-import { useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { deleteBook } from "../features/bookSlice";
 
 type TBook = {
   id: string;
@@ -9,7 +10,8 @@ type TBook = {
 };
 
 const BookList = () => {
-  const books: TBook[] = useAppSelector((state) => state.booksR);
+  const { books } = useAppSelector((state) => state.booksR);
+  const dispatch = useAppDispatch();
   return (
     <div className="h-screen max-w-7xl mx-auto flex justify-center items-center">
       <div>
@@ -28,7 +30,10 @@ const BookList = () => {
                 <button className="p-2 bg-green-700 text-white rounded ms-2 uppercase">
                   Edit{" "}
                 </button>
-                <button className="p-2 bg-red-700 text-white rounded ms-2 uppercase">
+                <button
+                  onClick={() => dispatch(deleteBook(book.id))}
+                  className="p-2 bg-red-700 text-white rounded ms-2 uppercase"
+                >
                   Remove{" "}
                 </button>
               </div>

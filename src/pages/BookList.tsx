@@ -1,13 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import AddBook from "../components/AddBook";
 import { deleteBook } from "../features/bookSlice";
 
-type TBook = {
-  id: string;
-  title: string;
-  author: string;
-  rating: number;
-  price: number;
-};
+// type TBook = {
+//   id: string;
+//   title: string;
+//   author: string;
+// };
 
 const BookList = () => {
   const { books } = useAppSelector((state) => state.booksR);
@@ -19,6 +18,9 @@ const BookList = () => {
           Welcome to <span className="uppercase text-green-800">BookList</span>{" "}
           app!
         </h1>
+        <div>
+          <AddBook></AddBook>
+        </div>
         <div className="my-8">
           <ol>
             {books.map((book) => (

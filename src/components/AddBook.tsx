@@ -23,6 +23,7 @@ const AddBook = ({ editableBook }: TEditableBook) => {
     } else {
       dispatch(addBook({ ...book, id }));
     }
+    setBook({ title: "", author: "" });
   };
 
   useEffect(() => {
@@ -43,7 +44,9 @@ const AddBook = ({ editableBook }: TEditableBook) => {
   };
   return (
     <div className="my-4">
-      <h1>Add new book here</h1>
+      <h1 className="my-2 text-xl font-semibold">
+        {editableBook.title ? "Edit Books info" : " Add new book"}
+      </h1>
       <form action="" onSubmit={handleSubmit}>
         <input
           className="border rounded p-2 bg-gray-100"
@@ -68,6 +71,15 @@ const AddBook = ({ editableBook }: TEditableBook) => {
         >
           {editableBook.title ? "Edit" : "Add"}
         </button>
+        {editableBookId && (
+          <button
+            className="p-2 bg-red-700 text-white rounded ms-2 uppercase"
+            type="reset"
+            onClick={() => setBook({ title: "", author: "" })}
+          >
+            Cancel Edit
+          </button>
+        )}
       </form>
     </div>
   );

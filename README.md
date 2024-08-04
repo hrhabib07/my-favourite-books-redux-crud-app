@@ -16,7 +16,7 @@ Completed on August 4, 2024
 
 ## Live Site
 
-Check out the live version of the project [here](https://favorite-book-list-app.vercel.app/).
+Check out the live version of the project [here](https://favorite-boolist-redux-crud.vercel.app/).
 
 ## Project Image
 

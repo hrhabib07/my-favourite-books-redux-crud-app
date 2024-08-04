@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { nanoid } from "nanoid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
-import { addBook } from "../features/bookSlice";
+import { addBook, editBook } from "../features/bookSlice";
 
-const AddBook = () => {
+type TEditableBook = {
+  editableBook: { id: string; title: string; author: string };
+};
+
+const AddBook = ({ editableBook }: TEditableBook) => {
+  const editableBookId = editableBook.id;
   const [book, setBook] = useState({
     title: "",
     author: "",
@@ -13,8 +18,22 @@ const AddBook = () => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const id = nanoid();
-    dispatch(addBook({ ...book, id }));
+    if (editableBook.title) {
+      dispatch(editBook({ ...book, id: editableBookId }));
+    } else {
+      dispatch(addBook({ ...book, id }));
+    }
   };
+
+  useEffect(() => {
+    if (editableBook) {
+      setBook({
+        title: editableBook.title,
+        author: editableBook.author,
+      });
+    }
+  }, [editableBook]);
+
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
     setBook((previousState) => ({
@@ -31,6 +50,7 @@ const AddBook = () => {
           type="text"
           name="title"
           placeholder="Book Name"
+          value={book.title}
           onChange={handleChange}
         />
 
@@ -39,13 +59,14 @@ const AddBook = () => {
           type="text"
           name="author"
           placeholder="Author"
+          value={book.author}
           onChange={handleChange}
         />
         <button
           className="p-2 bg-green-700 text-white rounded ms-2 uppercase"
           type="submit"
         >
-          Add
+          {editableBook.title ? "Edit" : "Add"}
         </button>
       </form>
     </div>
